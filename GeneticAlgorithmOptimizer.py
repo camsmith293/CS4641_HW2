@@ -6,8 +6,7 @@ class GeneticAlgorithmOptimizer():
         self.learner = NeuralNetLearner()
         self.neural_net = self.learner.network
         self.dataset = self.learner.ds
-        self.training_set = self.learner.train_data
-        self.testing_set = self.learner.test_data
+        self.training_set, self.testing_set = self.learner.get_datasets()
         self.optimizer = GA(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True)
 
     def learn(self,n_steps):

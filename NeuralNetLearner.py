@@ -45,9 +45,12 @@ class NeuralNetLearner:
         for (x, y) in zip(self.X, self.Y):
             self.ds.addSample(x, y)
 
-        self.test_data, train_data = self.ds.splitWithProportion(0.3)
+        self.test_data, self.train_data = self.ds.splitWithProportion(0.3)
 
         self.network = buildNetwork(64, 64, 1)
+
+    def get_datasets(self):
+        return self.train_data, self.test_data
 
     def activate(self, x):
         self.network.activate(x.tolist())
