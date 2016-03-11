@@ -38,6 +38,7 @@ class NeuralNetLearner:
     def __init__(self):
         self.bunch = load_digits()
         self.X = np.asarray(self.bunch.data, 'float32')
+        self.Y = np.asarray(self.bunch.target, 'float32')
         #self.X, self.Y = nudge_dataset(self.X, self.bunch.target)
         self.X = (self.X - np.min(self.X, 0)) / (np.max(self.X, 0) + 0.0001)  # 0-1 scaling
 
