@@ -7,13 +7,11 @@ class HillClimbingOptimizer():
         self.neural_net = self.learner.network
         self.dataset = self.learner.ds
         self.training_set, self.testing_set = self.learner.get_datasets()
-        self.optimizer = HillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True)
+        self.optimizer = HillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
+                                     maxEvaluations = 3, verbose = True, numParameters = 650)
 
-    def learn(self,n_steps):
-        for i in range(n_steps):
-            print("Iteration %d:", i)
-            self.neural_net = self.optimizer.learn()
-            print(self.testing_set.evaluateModuleMSE(self.neural_net), "\n")
+    def learn(self):
+        self.neural_net = self.optimizer.learn()
 
 h = HillClimbingOptimizer()
-h.learn(1)
+h.learn()
