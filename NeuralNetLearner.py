@@ -47,7 +47,7 @@ class NeuralNetLearner:
 
         self.test_data, self.train_data = self.ds.splitWithProportion(0.3)
 
-        self.network = buildNetwork(64, 64, 1)
+        self.network = buildNetwork(64, 32, 1)
 
     def get_datasets(self):
         return self.train_data, self.test_data
