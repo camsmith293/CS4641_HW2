@@ -8,7 +8,7 @@ class HillClimbingOptimizer():
         self.dataset = self.learner.ds
         self.training_set, self.testing_set = self.learner.get_datasets()
         self.optimizer = HillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
-                                     maxEvaluations = 3, verbose = True, numParameters = 650)
+                                     maxEvaluations = 3, verbose = True, numParameters = 661)
 
     def learn(self):
         self.neural_net = self.optimizer.learn()
