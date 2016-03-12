@@ -20,7 +20,7 @@ class MIMICOptimizer():
 
     def NeuralNet_fitness(self, weights):
         evaluatee = deepcopy(self.neural_net)
-        evaluatee._setParametes(weights)
+        evaluatee._setParameters(weights)
         return self.testing_set.evaluateModuleMSE(evaluatee)
 
 m = MIMICOptimizer(True)
