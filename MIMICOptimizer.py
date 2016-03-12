@@ -17,3 +17,6 @@ class MIMICOptimizer():
             print("Iteration ", i)
             self.optimizer.fit()
 
+m = MIMICOptimizer()
+m.learn(100)
+
