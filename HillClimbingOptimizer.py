@@ -33,7 +33,7 @@ class HillClimbingOptimizer():
 
         self.neural_net = best_model
 
-        nnet_hc_evaluations_file = open('./nnet_hc_evaluations.txt', 'rw')
+        nnet_hc_evaluations_file = open('./nnet_hc_evaluations.txt', 'w')
         for item in self.optimizer._allEvaluations:
             nnet_hc_evaluations_file.write("%s\n" % item)
         return best_model
