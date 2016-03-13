@@ -28,6 +28,7 @@ class HillClimbingOptimizer():
             nnet_hc_evaluations_file = open('out/nnet_hc_evaluations.csv', 'a')
             for item in self.optimizer._allEvaluations:
                 nnet_hc_evaluations_file.write("%s\n" % item)
+            nnet_hc_evaluations_file.write("Restart %d\n" % i)
 
             self.optimizer = HillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
                     verbose = True, numParameters = 661, maxLearningSteps = 1000,  storeAllEvaluations = True)
