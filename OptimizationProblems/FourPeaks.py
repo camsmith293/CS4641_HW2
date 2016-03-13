@@ -1,10 +1,17 @@
 from random import choice, randint
 from pybrain.structure.evolvables.evolvable import Evolvable
 
-def fitness_fourpeaks(problem):
-        tail = problem.tail('0')
-        head = problem.head('1')
-        return max(tail, head) + problem.R()
+def fitness_fourpeaks(evaluable):
+        tail = evaluable.tail('0')
+        head = evaluable.head('1')
+        return max(tail, head) + evaluable.R()
+
+def fitness_fourpeaks_GA(evaluable):
+        stringed = ""
+        for i in evaluable:
+            stringed += str(evaluable[i])
+        temp = FourPeaks(stringed)
+        return fitness_fourpeaks(temp)
 
 class FourPeaks(Evolvable):
     def __init__(self, bitstring):

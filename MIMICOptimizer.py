@@ -2,6 +2,10 @@ from copy import deepcopy
 from NeuralNetLearner import NeuralNetLearner
 from Mimic import Mimic
 
+from OptimizationProblems.FourPeaks import FourPeaks, fitness_fourpeaks
+from OptimizationProblems.kColors import kColors, fitness_kcolors
+from OptimizationProblems.Knapsack import Knapsack, fitness_knapsack
+
 class MIMICOptimizer():
     def learn_nnet(self, iterations):
         self.learner = NeuralNetLearner()
@@ -21,7 +25,7 @@ class MIMICOptimizer():
         return self.testing_set.evaluateModuleMSE(evaluatee)
 
     def learn_optimizationproblem(self, iterations, problem):
-        self.optimizer = Mimic(problem.domain, problem.f, samples=250, maximize=False)
+        self.optimizer = Mimic(problem.domain, problem.f, samples=250, maximize=True)
 
         for i in range(iterations):
             print("Iteration ", i)

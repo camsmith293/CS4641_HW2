@@ -3,8 +3,8 @@ from NeuralNetLearner import NeuralNetLearner
 from OptimizationProblems import *
 import matplotlib.pyplot as plt
 from OptimizationProblems.FourPeaks import FourPeaks, fitness_fourpeaks
-from OptimizationProblems.kColors import kColors
-from OptimizationProblems.Knapsack import Knapsack
+from OptimizationProblems.kColors import kColors, fitness_kcolors
+from OptimizationProblems.Knapsack import Knapsack, fitness_knapsack
 
 
 class HillClimbingOptimizer():
@@ -25,6 +25,8 @@ class HillClimbingOptimizer():
 
         for i in range(num_restarts):
             temp, best_estimate = self.optimizer.learn()
+            self.optimizer = HillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
+                                     verbose = True, numParameters = 661, maxLearningSteps = 2000)
             if best_estimate <= min_MSE:
                 best_model = temp
                 min_MSE = best_estimate
@@ -34,13 +36,15 @@ class HillClimbingOptimizer():
 
     def learn_optimizationproblem(self, num_restarts, problem, fitness_function):
         # Optimizer will take 250 steps and restart, saving the best model from the restarts
-        self.optimizer = HillClimber(fitness_function, problem, verbose = True, maxLearningSteps = 250)
+        self.optimizer = HillClimber(fitness_function, problem, verbose = True, maxLearningSteps = 250, minimize=True)
 
         best_model = problem
         max_fitness = -2147438640
 
         for i in range(num_restarts):
+            print("Restart", i)
             temp, best_estimate = self.optimizer.learn()
+            self.optimizer = HillClimber(fitness_function, problem, verbose = True, maxLearningSteps = 250, minimize=True)
             if best_estimate >= max_fitness:
                 best_model = temp
                 max_fitness = best_estimate
@@ -48,5 +52,5 @@ class HillClimbingOptimizer():
         return best_model
 
 h = HillClimbingOptimizer()
-f = FourPeaks('11100100')
-h.learn_optimizationproblem(5, f, fitness_fourpeaks)
+f = kColors()
+print(h.learn_optimizationproblem(5, f, fitness_kcolors).model)

@@ -1,12 +1,28 @@
 from random import choice, randint
 from pybrain.structure.evolvables.evolvable import Evolvable
 
+colors = ['Red', 'Blue', 'Green', 'Yellow', 'Black']
+states = ['Andhra', 'Karnataka', 'TamilNadu', 'Kerala']
+
+def fitness_kcolors(evaluable):
+        conflicts = 0
+        for i in range(len(states)):
+            state = states[i]
+            conflicts += evaluable.promising(state, evaluable.model[state])
+        return conflicts
+
+def fitness_kcolors_GA(evaluable):
+        temp = kColors()
+        for i in range(len(evaluable)):
+            temp.model[states[i]] = evaluable[i]
+        return fitness_kcolors(temp)
+
 class kColors(Evolvable):
 
     def __init__(self):
-        self.colors = ['Red', 'Blue', 'Green', 'Yellow', 'Black']
+        self.colors = colors
 
-        self.states = ['Andhra', 'Karnataka', 'TamilNadu', 'Kerala']
+        self.states = states
 
         self.neighbors = {}
         self.neighbors['Andhra'] = ['Karnataka', 'TamilNadu']
@@ -18,27 +34,21 @@ class kColors(Evolvable):
         self.randomize()
 
     def promising(self, state, color):
+        collisions = 0
         for neighbor in self.neighbors.get(state):
             color_of_neighbor = self.model.get(neighbor)
-            if color_of_neighbor == color:
-                return False
+            if color_of_neighbor == color: collisions += 1
 
-        return True
+        return collisions
 
     def get_color_for_state(self, state):
         for color in self.colors:
             if self.promising(state, color):
                 return color
 
-    def f(self, assignments):
-        conflicts = 0
-        for i in range(assignments):
-            if not self.promising(self.states[i], assignments[i]): conflicts += 1
-        return conflicts
-
     def mutate(self, **args):
         state = choice(self.states)
-        exclusionary = self.colors - self.model[state]
+        exclusionary = [elem for elem in self.colors if elem != self.model[state]]
         self.model[state] = choice(exclusionary)
 
     def randomize(self):
