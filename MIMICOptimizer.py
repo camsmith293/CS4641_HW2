@@ -15,9 +15,12 @@ class MIMICOptimizer():
 
         self.optimizer = Mimic([(-100, 100)] * 661, self.NeuralNet_fitness, samples=250, maximize=False)
 
+        evaluations = []
+
         for i in range(iterations):
             print("Iteration %d" % i)
             filtered = self.optimizer.fit()
+            evaluations.append(filtered[1])
             print(filtered)
             if len(filtered) == 1:
                 return filtered

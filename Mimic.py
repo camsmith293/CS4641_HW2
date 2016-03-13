@@ -52,7 +52,7 @@ class Mimic(object):
 
     def _generate_initial_sample(self):
         if not self.discreteValues:
-            return [random.randint(self.domain[i][0], self.domain[i][1])
+            return [random.uniform(self.domain[i][0], self.domain[i][1])
                     for i in range(len(self.domain))]
         else:
             return [random.choice(self.domain)
