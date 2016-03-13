@@ -13,7 +13,7 @@ class MIMICOptimizer():
         self.dataset = self.learner.ds
         self.training_set, self.testing_set = self.learner.get_datasets()
 
-        self.optimizer = Mimic([(-50, 50)] * 661, self.NeuralNet_fitness, samples=500, maximize=False)
+        self.optimizer = Mimic([(-10, 10)] * 661, self.NeuralNet_fitness, samples=500, maximize=False)
 
         evaluations = []
         nnet_mimic_evaluations_file = open('out/nnet_mimic_evaluations.csv', 'a')
@@ -52,4 +52,4 @@ class MIMICOptimizer():
 m = MIMICOptimizer()
 # f = FourPeaks('11110000')
 # m.learn_optimizationproblem(1000, f, fitness_fourpeaks)
-m.learn_nnet(18)
+m.learn_nnet(10)
