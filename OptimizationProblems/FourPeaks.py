@@ -5,6 +5,7 @@ class FourPeaks(Evolvable):
     def __init__(self):
         self.length = len(self.model)
         self.t = int(self.length/10)
+        self.model = "" * self.length
         self.randomize()
 
     def f(self):
