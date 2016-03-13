@@ -23,13 +23,11 @@ class HillClimbingOptimizer():
         best_model = self.neural_net
         min_MSE = 2147438647
 
-        temp = self.neural_net
         for i in range(num_restarts):
-            temp = self.optimizer.learn()
-            temp_MSE = self.testing_set.evaluateModuleMSE(temp)
-            if temp_MSE <= self.testing_set.evaluateModuleMSE(best_model):
+            best_estimate, temp = self.optimizer.learn()
+            if best_estimate <= min_MSE:
                 best_model = temp
-                min_MSE = temp_MSE
+                min_MSE = best_estimate
 
         self.neural_net = best_model
         return best_model
@@ -42,12 +40,10 @@ class HillClimbingOptimizer():
         max_fitness = -2147438640
 
         for i in range(num_restarts):
-            temp = problem
-            temp = self.optimizer.learn()
-            temp_fitness = fitness_function(temp)
-            if temp_fitness >= max_fitness:
+            best_estimate, temp = self.optimizer.learn()
+            if best_estimate >= max_fitness:
                 best_model = temp
-                max_fitness = temp_fitness
+                max_fitness = best_estimate
 
         return best_model
 
