@@ -19,14 +19,17 @@ class Mimic(object):
     :param percentile: Percentile of the distribution to keep after each iteration, default is 0.90
     """
 
-    def __init__(self, domain, fitness_function, samples=1000, percentile=0.90):
+    def __init__(self, domain, fitness_function, samples=1000, percentile=0.90, maximize=False, discreteValues=False):
 
         self.domain = domain
         self.samples = samples
         initial_samples = np.array(self._generate_initial_samples())
-        self.sample_set = SampleSet(initial_samples, fitness_function)
+        self.sample_set = SampleSet(initial_samples, fitness_function, maximize=maximize)
         self.fitness_function = fitness_function
         self.percentile = percentile
+        self.maximize = maximize
+        self.discreteValues = discreteValues
+
 
     def fit(self):
         """
@@ -39,6 +42,7 @@ class Mimic(object):
         self.sample_set = SampleSet(
             self.distribution.generate_samples(self.samples),
             self.fitness_function,
+            maximize=self.maximize
         )
         return self.sample_set.get_percentile(self.percentile)
 
@@ -46,12 +50,16 @@ class Mimic(object):
         return [self._generate_initial_sample() for i in range(self.samples)]
 
     def _generate_initial_sample(self):
-        return [random.randint(self.domain[i][0], self.domain[i][1])
-                for i in range(len(self.domain))]
+        if not self.discreteValues:
+            return [random.randint(self.domain[i][0], self.domain[i][1])
+                    for i in range(len(self.domain))]
+        else:
+            return [random.choice(self.domain)
+                    for i in range(len(self.domain))]
 
 
 class SampleSet(object):
-    def __init__(self, samples, fitness_function, maximize=True):
+    def __init__(self, samples, fitness_function, maximize=False):
         self.samples = samples
         self.fitness_function = fitness_function
         self.maximize = maximize

@@ -1,30 +1,50 @@
-colors = ['Red', 'Blue', 'Green', 'Yellow', 'Black']
+from random import choice, randint
+from pybrain.structure.evolvables.evolvable import Evolvable
 
-states = ['Andhra', 'Karnataka', 'TamilNadu', 'Kerala']
+class kColors(Evolvable):
 
-neighbors = {}
-neighbors['Andhra'] = ['Karnataka', 'TamilNadu']
-neighbors['Karnataka'] = ['Andhra', 'TamilNadu', 'Kerala']
-neighbors['TamilNadu'] = ['Andhra', 'Karnataka', 'Kerala']
-neighbors['Kerala'] = ['Karnataka', 'TamilNadu']
+    def __init__(self):
+        self.colors = ['Red', 'Blue', 'Green', 'Yellow', 'Black']
 
-colors_of_states = {}
+        self.states = ['Andhra', 'Karnataka', 'TamilNadu', 'Kerala']
 
-def promising(state, color):
-    for neighbor in neighbors.get(state):
-        color_of_neighbor = colors_of_states.get(neighbor)
-        if color_of_neighbor == color:
-            return False
+        self.neighbors = {}
+        self.neighbors['Andhra'] = ['Karnataka', 'TamilNadu']
+        self.neighbors['Karnataka'] = ['Andhra', 'TamilNadu', 'Kerala']
+        self.neighbors['TamilNadu'] = ['Andhra', 'Karnataka', 'Kerala']
+        self.neighbors['Kerala'] = ['Karnataka', 'TamilNadu']
 
-    return True
+        self.model = {}
+        self.randomize()
 
-def get_color_for_state(state):
-    for color in colors:
-        if promising(state, color):
-            return color
+    def promising(self, state, color):
+        for neighbor in self.neighbors.get(state):
+            color_of_neighbor = self.model.get(neighbor)
+            if color_of_neighbor == color:
+                return False
 
-def f(assignments):
-    conflicts = 0
-    for i in len(assignments):
-        if not promising(states[i], assignments[i]): conflicts += 1
-    return conflicts
+        return True
+
+    def get_color_for_state(self, state):
+        for color in self.colors:
+            if self.promising(state, color):
+                return color
+
+    def f(self, assignments):
+        conflicts = 0
+        for i in range(assignments):
+            if not self.promising(self.states[i], assignments[i]): conflicts += 1
+        return conflicts
+
+    def mutate(self, **args):
+        state = choice(self.states)
+        exclusionary = self.colors - self.model[state]
+        self.model[state] = choice(exclusionary)
+
+    def randomize(self):
+        for state in self.states:
+            self.model[state] = choice(self.colors)
+
+    def domain(self):
+        return self.colors * len(self.states)
+
