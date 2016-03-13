@@ -16,15 +16,17 @@ class MIMICOptimizer():
         self.optimizer = Mimic([(-50, 50)] * 661, self.NeuralNet_fitness, samples=500, maximize=False)
 
         evaluations = []
+        nnet_mimic_evaluations_file = open('out/nnet_mimic_evaluations.csv', 'a')
 
         for i in range(iterations):
             print("Iteration %d" % i)
             filtered = self.optimizer.fit()
             evaluations.append(filtered[1])
             print(filtered)
-            #print(len(set(filtered[0])))
-            if len(filtered[0]) == 1:
-                return filtered
+
+        evaluations.append("end")
+        for item in evaluations:
+            nnet_mimic_evaluations_file.write("%s\n" % item)
 
     def NeuralNet_fitness(self, weights):
         self.neural_net._setParameters(weights)
@@ -34,14 +36,20 @@ class MIMICOptimizer():
         self.optimizer = Mimic(problem.domain(), fitness_function, samples=250,
                 maximize=True, discreteValues=True, percentile=0.5)
 
+        evaluations = []
+
         for i in range(iterations):
             print("Iteration %d" % i)
             filtered = self.optimizer.fit()
+            evaluations.append(filtered[1])
             print(filtered)
-            if len(filtered) == 1:
-                return filtered
+
+        out_name = 'out/opt_mimic_evaluations_' + problem.__class__.__name__ + '.csv'
+        opt_mimic_evaluations_file = open(out_name, 'a')
+        for item in evaluations:
+            opt_mimic_evaluations_file.write("%s\n" % item)
 
 m = MIMICOptimizer()
 # f = FourPeaks('11110000')
 # m.learn_optimizationproblem(1000, f, fitness_fourpeaks)
-m.learn_nnet(1000)
+m.learn_nnet(18)

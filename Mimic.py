@@ -19,7 +19,7 @@ class Mimic(object):
     :param percentile: Percentile of the distribution to keep after each iteration, default is 0.90
     """
 
-    def __init__(self, domain, fitness_function, samples=1000, percentile=0.50, maximize=False, discreteValues=False):
+    def __init__(self, domain, fitness_function, samples=1000, percentile=0.70, maximize=False, discreteValues=False):
 
         self.domain = domain
         self.samples = samples
