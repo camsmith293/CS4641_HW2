@@ -22,7 +22,8 @@ class MIMICOptimizer():
             filtered = self.optimizer.fit()
             evaluations.append(filtered[1])
             print(filtered)
-            if len(filtered) == 1:
+            print(len(filtered[0]))
+            if len(filtered[0]) == 1:
                 return filtered
 
     def NeuralNet_fitness(self, weights):
@@ -31,7 +32,8 @@ class MIMICOptimizer():
         return self.testing_set.evaluateModuleMSE(evaluatee)
 
     def learn_optimizationproblem(self, iterations, problem, fitness_function):
-        self.optimizer = Mimic(problem.domain(), fitness_function, samples=250, maximize=True, discreteValues=True)
+        self.optimizer = Mimic(problem.domain(), fitness_function, samples=250,
+                maximize=True, discreteValues=True, percentile=0.5)
 
         for i in range(iterations):
             print("Iteration %d" % i)
