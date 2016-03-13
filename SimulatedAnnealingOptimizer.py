@@ -90,4 +90,4 @@ class SimulatedAnnealingOptimizer():
 s = SimulatedAnnealingOptimizer()
 k = Knapsack()
 #ret = s.learn_optimizationproblem(5, k, fitness_knapsack)
-print(s.learn_nnet(5))
+print(s.learn_nnet_norestarts())
