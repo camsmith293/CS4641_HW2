@@ -52,5 +52,5 @@ class HillClimbingOptimizer():
         return best_model
 
 h = HillClimbingOptimizer()
-f = FourPeaks()
+f = FourPeaks('11100100')
 h.learn_optimizationproblem(5, f)
