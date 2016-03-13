@@ -15,7 +15,7 @@ class SimulatedAnnealingOptimizer():
 
         # Optimizer will take 2000 steps and restart, saving the best model from the restarts
         self.optimizer = StochasticHillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
-                verbose = True, numParameters = 661, maxLearningSteps = 1000,  storeAllEvaluations = True)
+                verbose = True, numParameters = 661, maxLearningSteps = 2000,  storeAllEvaluations = True)
 
         # Save best model and lowest MSE for random restarting
         best_model = self.neural_net
@@ -65,5 +65,5 @@ class SimulatedAnnealingOptimizer():
 
 s = SimulatedAnnealingOptimizer()
 k = Knapsack()
-ret = s.learn_optimizationproblem(5, k, fitness_knapsack)
-print(ret[0].model, ret[1])
+#ret = s.learn_optimizationproblem(5, k, fitness_knapsack)
+print(h.learn_nnet(5))
