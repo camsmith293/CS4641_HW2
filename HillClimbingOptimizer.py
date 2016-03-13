@@ -25,6 +25,11 @@ class HillClimbingOptimizer():
 
         for i in range(num_restarts):
             temp, best_estimate = self.optimizer.learn()
+
+            nnet_hc_evaluations_file = open('./nnet_hc_evaluations.txt', 'w')
+            for item in self.optimizer._allEvaluations:
+                nnet_hc_evaluations_file.write("%s\n" % item)
+
             self.optimizer = HillClimber(self.testing_set.evaluateModuleMSE, self.neural_net, minimize=True,
                     verbose = True, numParameters = 661, maxLearningSteps = 1000,  storeAllEvaluations = True)
             if best_estimate <= min_MSE:
@@ -33,9 +38,6 @@ class HillClimbingOptimizer():
 
         self.neural_net = best_model
 
-        nnet_hc_evaluations_file = open('./nnet_hc_evaluations.txt', 'w')
-        for item in self.optimizer._allEvaluations:
-            nnet_hc_evaluations_file.write("%s\n" % item)
         return best_model
 
     def learn_optimizationproblem(self, num_restarts, problem, fitness_function):
