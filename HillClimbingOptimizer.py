@@ -1,5 +1,6 @@
 from pybrain.optimization import HillClimber
 from NeuralNetLearner import NeuralNetLearner
+import matplotlib.pyplot as plt
 
 class HillClimbingOptimizer():
     def __init__(self):
