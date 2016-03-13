@@ -57,5 +57,6 @@ class HillClimbingOptimizer():
         return best_model
 
 h = HillClimbingOptimizer()
-f = kColors()
-print(h.learn_optimizationproblem(5, f, fitness_kcolors).model)
+k = kColors()
+#print(h.learn_optimizationproblem(5, k, fitness_kcolors).model)
+print(h.learn_nnet(3))
