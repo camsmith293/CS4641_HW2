@@ -73,32 +73,34 @@ class SampleSet(object):
 class Distribution(object):
     def __init__(self, samples):
         self.samples = samples
-        self.complete_graph = self._generate_mutual_information_graph()
-        self.spanning_graph = self._generate_spanning_graph()
-        self._generate_bayes_net()
+        #self.complete_graph = self._generate_mutual_information_graph()
+        #self.spanning_graph = self._generate_spanning_graph()
+        #self._generate_bayes_net()
 
     def generate_samples(self, number_to_generate):
-        root = 0
-        sample_len = len(self.bayes_net.node)
-        samples = np.zeros((number_to_generate, sample_len))
-        values = self.bayes_net.node[root]["probabilities"].keys()
-        probabilities = self.bayes_net.node[root]["probabilities"].values()
-        dist = stats.rv_discrete(name="dist", values=(values, probabilities))
-        samples[:, 0] = dist.rvs(size=number_to_generate)
-        for parent, current in nx.bfs_edges(self.bayes_net, root):
-            for i in range(number_to_generate):
-                parent_val = samples[i, parent]
-                current_node = self.bayes_net.node[current]
-                cond_dist = current_node["probabilities"][int(parent_val)]
-                values = cond_dist.keys()
-                probabilities = cond_dist.values()
-                dist = stats.rv_discrete(
-                    name="dist",
-                    values=(values, probabilities)
-                )
-                samples[i, current] = dist.rvs()
+        # root = 0
+        # sample_len = len(self.bayes_net.node)
+        # samples = np.zeros((number_to_generate, sample_len))
+        # values = self.bayes_net.node[root]["probabilities"].keys()
+        # probabilities = self.bayes_net.node[root]["probabilities"].values()
+        # dist = stats.rv_discrete(name="dist", values=(values, probabilities))
+        # samples[:, 0] = dist.rvs(size=number_to_generate)
+        # for parent, current in nx.bfs_edges(self.bayes_net, root):
+        #     for i in range(number_to_generate):
+        #         parent_val = samples[i, parent]
+        #         current_node = self.bayes_net.node[current]
+        #         cond_dist = current_node["probabilities"][int(parent_val)]
+        #         values = cond_dist.keys()
+        #         probabilities = cond_dist.values()
+        #         dist = stats.rv_discrete(
+        #             name="dist",
+        #             values=(values, probabilities)
+        #         )
+        #         samples[i, current] = dist.rvs()
+        #
+        # return samples
 
-        return samples
+        return [ self.samples[i] for i in sorted(random.sample(range(len(self.samples)), 4)) ]
 
     def _generate_bayes_net(self):
         # Pseudo Code
