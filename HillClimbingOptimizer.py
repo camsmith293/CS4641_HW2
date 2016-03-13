@@ -24,7 +24,7 @@ class HillClimbingOptimizer():
         min_MSE = 2147438647
 
         for i in range(num_restarts):
-            best_estimate, temp = self.optimizer.learn()
+            temp, best_estimate = self.optimizer.learn()
             if best_estimate <= min_MSE:
                 best_model = temp
                 min_MSE = best_estimate
@@ -40,7 +40,7 @@ class HillClimbingOptimizer():
         max_fitness = -2147438640
 
         for i in range(num_restarts):
-            best_estimate, temp = self.optimizer.learn()
+            temp, best_estimate = self.optimizer.learn()
             if best_estimate >= max_fitness:
                 best_model = temp
                 max_fitness = best_estimate
