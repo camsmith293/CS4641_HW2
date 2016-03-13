@@ -1,6 +1,11 @@
 from random import choice, randint
 from pybrain.structure.evolvables.evolvable import Evolvable
 
+def f(problem):
+        tail = problem.tail('0')
+        head = problem.head('1')
+        return max(tail, head) + problem.R()
+
 class FourPeaks(Evolvable):
     def __init__(self, bitstring):
         self.length = len(bitstring)
@@ -8,11 +13,6 @@ class FourPeaks(Evolvable):
         self.model = [0] * self.length
         for i in range(len(bitstring)):
             self.model[i] = int(bitstring[i])
-
-    def f(self):
-        tail = self.tail('0')
-        head = self.head('1')
-        return max(tail, head) + self.R()
 
     def tail(self, b):
         stringed = ""
