@@ -22,7 +22,7 @@ class MIMICOptimizer():
             filtered = self.optimizer.fit()
             evaluations.append(filtered[1])
             print(filtered)
-            print(len(set(filtered[0])))
+            #print(len(set(filtered[0])))
             if len(filtered[0]) == 1:
                 return filtered
 
