@@ -2,9 +2,13 @@ from random import choice, randint
 from pybrain.structure.evolvables.evolvable import Evolvable
 
 def fitness_fourpeaks(evaluable):
-        tail = evaluable.tail('0')
-        head = evaluable.head('1')
-        return max(tail, head) + evaluable.R()
+        stringed = ""
+        for i in evaluable:
+            stringed += str(evaluable[i])
+        temp = FourPeaks(stringed)
+        tail = temp.tail('0')
+        head = temp.head('1')
+        return max(tail, head) + temp.R()
 
 def fitness_fourpeaks_GA(evaluable):
         stringed = ""
@@ -20,18 +24,14 @@ class FourPeaks(Evolvable):
         self.model = [0] * self.length
         for i in range(len(bitstring)):
             self.model[i] = int(bitstring[i])
+            
+        self.stringed = bitstring
 
     def tail(self, b):
-        stringed = ""
-        for i in self.model:
-            stringed += str(self.model[i])
-        return (len(stringed) - len(stringed.rstrip(b)))
+        return (len(self.stringed) - len(self.stringed.rstrip(b)))
 
     def head(self, b):
-        stringed = ""
-        for i in self.model:
-            stringed += str(self.model[i])
-        return len(stringed.split('0', 1)[0])
+        return len(self.stringed.split('0', 1)[0])
 
     def R(self):
         tail_bool = self.tail('0') > self.t

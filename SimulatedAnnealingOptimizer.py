@@ -14,7 +14,7 @@ class SimulatedAnnealingOptimizer():
         self.training_set, self.testing_set = self.learner.get_datasets()
 
         # Optimizer will take 2000 steps and restart, saving the best model from the restarts
-        self.optimizer = StochasticHillClimber(self.testing_set.evaluateModuleMSE, self.neural_net, minimize=True,
+        self.optimizer = StochasticHillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
                 verbose = True, numParameters = 661, maxLearningSteps = 1000,  storeAllEvaluations = True)
 
         # Save best model and lowest MSE for random restarting
@@ -23,35 +23,47 @@ class SimulatedAnnealingOptimizer():
 
         for i in range(num_restarts):
             temp, best_estimate = self.optimizer.learn()
-            self.optimizer = StochasticHillClimber(self.testing_set.evaluateModuleMSE, self.neural_net, minimize=True,
+
+            nnet_sa_evaluations_file = open('out/nnet_sa_evaluations.csv', 'a')
+            for item in self.optimizer._allEvaluations:
+                nnet_sa_evaluations_file.write("%s\n" % item)
+
+            self.optimizer = StochasticHillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
                     verbose = True, numParameters = 661, maxLearningSteps = 1000,  storeAllEvaluations = True)
             if best_estimate <= min_MSE:
                 best_model = temp
                 min_MSE = best_estimate
 
         self.neural_net = best_model
-        return best_model
+
+        return best_model, min_MSE
 
     def learn_optimizationproblem(self, num_restarts, problem, fitness_function):
         # Optimizer will take 250 steps and restart, saving the best model from the restarts
         self.optimizer = StochasticHillClimber(fitness_function, problem, verbose = True,
                 maxLearningSteps = 250, minimize=True, storeAllEvaluations = True)
-
         best_model = problem
         max_fitness = -2147438640
 
         for i in range(num_restarts):
             print("Restart", i)
             temp, best_estimate = self.optimizer.learn()
+
+            out_name = 'out/opt_sa_evaluations_' + problem.__class__.__name__ + '.csv'
+            opt_sa_evaluations_file = open(out_name, 'a')
+            for item in self.optimizer._allEvaluations:
+                opt_sa_evaluations_file.write("%s\n" % item)
+            opt_sa_evaluations_file.write("Restart %d\n" % i)
+
             self.optimizer = StochasticHillClimber(fitness_function, problem, verbose = True,
-                maxLearningSteps = 250, minimize=True, storeAllEvaluations = True)
+                     maxLearningSteps = 500, storeAllEvaluations = True)
             if best_estimate >= max_fitness:
                 best_model = temp
                 max_fitness = best_estimate
 
-        return best_model
-
+        return best_model, max_fitness
 
 s = SimulatedAnnealingOptimizer()
 k = Knapsack()
-print(s.learn_optimizationproblem(5, k, fitness_knapsack).model)
+ret = s.learn_optimizationproblem(5, k, fitness_knapsack)
+print(ret[0].model, ret[1])

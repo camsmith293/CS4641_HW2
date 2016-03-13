@@ -15,8 +15,12 @@ class GeneticAlgorithmOptimizer():
         self.training_set, self.testing_set = self.learner.get_datasets()
         self.optimizer = GA(self.testing_set.evaluateModuleMSE, self.neural_net, minimize=True,
                             verbose = True, numParameters = 661,
-                            maxLearningSteps=2000, desiredEvaluation = 0.6)
+                            maxLearningSteps=2000, desiredEvaluation = 0.6,
+                            storeAllEvaluations = True)
         temp, best_estimate = self.optimizer.learn()
+        nnet_ga_evaluations_file = open('out/nnet_ga_evaluations.csv', 'a')
+        for item in self.optimizer._allEvaluations:
+            nnet_ga_evaluations_file.write("%s\n" % item)
         return temp
 
     def learn_optimizationproblem(self, problem, fitness_function):
@@ -25,7 +29,11 @@ class GeneticAlgorithmOptimizer():
             initial_population.append(deepcopy(problem).randomize())
         self.optimizer = GA(fitness_function, problem.model,
                             verbose = True,maxLearningSteps=2000, desiredEvaluation = 0.6,
-                            initialPopulation = initial_population, initRangeScaling=1)
+                            initialPopulation = initial_population, initRangeScaling=1,storeAllEvaluations = True)
+        out_name = 'out/opt_ga_evaluations_' + problem.__class__.__name__ + '.csv'
+        opt_ga_evaluations_file = open(out_name, 'a')
+        for item in self.optimizer._allEvaluations:
+            opt_ga_evaluations_file.write("%s\n" % item)
         temp, best_estimate = self.optimizer.learn()
         return temp
 

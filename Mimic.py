@@ -23,21 +23,22 @@ class Mimic(object):
 
         self.domain = domain
         self.samples = samples
+        self.discreteValues = discreteValues
         initial_samples = np.array(self._generate_initial_samples())
         self.sample_set = SampleSet(initial_samples, fitness_function, maximize=maximize)
         self.fitness_function = fitness_function
         self.percentile = percentile
         self.maximize = maximize
-        self.discreteValues = discreteValues
 
 
     def fit(self):
         """
         Run this to perform one iteration of the Mimic algorithm
-        :return: A list containing the top percentile of data points
+        :return: A tuple containing the list containing the top percentile of data points
+                 and the theta value
         """
 
-        samples = self.sample_set.get_percentile(self.percentile)
+        samples = self.sample_set.get_percentile(self.percentile)[0]
         self.distribution = Distribution(samples)
         self.sample_set = SampleSet(
             self.distribution.generate_samples(self.samples),
@@ -75,7 +76,7 @@ class SampleSet(object):
     def get_percentile(self, percentile):
         fit_samples = self.calculate_fitness()
         index = int(len(fit_samples) * percentile)
-        return fit_samples[:index]
+        return fit_samples[:index], self.fitness_function(fit_samples[index])
 
 
 class Distribution(object):

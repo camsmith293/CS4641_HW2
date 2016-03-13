@@ -4,6 +4,12 @@ To optimize the optimization problems, create a new instance of the one you want
 and pass that along with the corresponding fitness function as parameters to the
 learn_optimization problem method
 
+GeneticAlgorithmOptimizer is unique in that you must use special fitness functions
+(fitness_fourpeaks_ga as opposed to fitness_fourpeaks as it is in the others)
+
+If learning kColors, be sure to set the optimizer's minimize attribute
+when it is constructed in learn_optimization problem
+
 Implemented using Python 3.4.3
 Packages Used:
 --Install all using pip3 for best results--
@@ -22,7 +28,7 @@ sudo pip3 install scipy
 
 PyBrain Install Instructions
 ----------------------------
-sudo pip3 install git+https://github.com/pybrain/pybrain.git
+sudo pip3 install --upgrade git+https://github.com/pybrain/pybrain.git
 
 MatPlotLib Install Instructions
 -------------------------------

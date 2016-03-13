@@ -16,20 +16,27 @@ class MIMICOptimizer():
         self.optimizer = Mimic([(-100, 100)] * 661, self.NeuralNet_fitness, samples=250, maximize=False)
 
         for i in range(iterations):
-            print("Iteration ", i)
-            self.optimizer.fit()
+            print("Iteration %d" % i)
+            filtered = self.optimizer.fit()
+            print(filtered)
+            if len(filtered) == 1:
+                return filtered
 
     def NeuralNet_fitness(self, weights):
         evaluatee = deepcopy(self.neural_net)
         evaluatee._setParameters(weights)
         return self.testing_set.evaluateModuleMSE(evaluatee)
 
-    def learn_optimizationproblem(self, iterations, problem):
-        self.optimizer = Mimic(problem.domain, problem.f, samples=250, maximize=True)
+    def learn_optimizationproblem(self, iterations, problem, fitness_function):
+        self.optimizer = Mimic(problem.domain(), fitness_function, samples=250, maximize=True, discreteValues=True)
 
         for i in range(iterations):
-            print("Iteration ", i)
-            self.optimizer.fit()
+            print("Iteration %d" % i)
+            filtered = self.optimizer.fit()
+            print(filtered)
+            if len(filtered) == 1:
+                return filtered
 
 m = MIMICOptimizer()
-m.learn_nnet(100)
+f = FourPeaks('11110000')
+m.learn_optimizationproblem(1000, f, fitness_fourpeaks)

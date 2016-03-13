@@ -1,7 +1,6 @@
 from pybrain.optimization import HillClimber
 from NeuralNetLearner import NeuralNetLearner
 from OptimizationProblems import *
-import matplotlib.pyplot as plt
 from OptimizationProblems.FourPeaks import FourPeaks, fitness_fourpeaks
 from OptimizationProblems.kColors import kColors, fitness_kcolors
 from OptimizationProblems.Knapsack import Knapsack, fitness_knapsack
@@ -16,7 +15,7 @@ class HillClimbingOptimizer():
         self.training_set, self.testing_set = self.learner.get_datasets()
 
         # Optimizer will take 2000 steps and restart, saving the best model from the restarts
-        self.optimizer = HillClimber(self.testing_set.evaluateModuleMSE, self.neural_net, minimize=True,
+        self.optimizer = HillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
                 verbose = True, numParameters = 661, maxLearningSteps = 1000,  storeAllEvaluations = True)
 
         # Save best model and lowest MSE for random restarting
@@ -26,11 +25,11 @@ class HillClimbingOptimizer():
         for i in range(num_restarts):
             temp, best_estimate = self.optimizer.learn()
 
-            nnet_hc_evaluations_file = open('./nnet_hc_evaluations.txt', 'w')
+            nnet_hc_evaluations_file = open('out/nnet_hc_evaluations.csv', 'a')
             for item in self.optimizer._allEvaluations:
                 nnet_hc_evaluations_file.write("%s\n" % item)
 
-            self.optimizer = HillClimber(self.testing_set.evaluateModuleMSE, self.neural_net, minimize=True,
+            self.optimizer = HillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
                     verbose = True, numParameters = 661, maxLearningSteps = 1000,  storeAllEvaluations = True)
             if best_estimate <= min_MSE:
                 best_model = temp
@@ -50,6 +49,13 @@ class HillClimbingOptimizer():
         for i in range(num_restarts):
             print("Restart", i)
             temp, best_estimate = self.optimizer.learn()
+
+            out_name = 'out/opt_hc_evaluations_' + problem.__class__.__name__ + '.csv'
+            opt_hc_evaluations_file = open(out_name, 'a')
+            for item in self.optimizer._allEvaluations:
+                opt_hc_evaluations_file.write("%s\n" % item)
+            opt_hc_evaluations_file.write("Restart %d\n" % i)
+
             self.optimizer = HillClimber(fitness_function, problem, verbose = True,
                      maxLearningSteps = 250, minimize=True, storeAllEvaluations = True)
             if best_estimate >= max_fitness:
@@ -60,5 +66,5 @@ class HillClimbingOptimizer():
 
 h = HillClimbingOptimizer()
 k = kColors()
-#print(h.learn_optimizationproblem(5, k, fitness_kcolors).model)
-print(h.learn_nnet(1))
+print(h.learn_optimizationproblem(5, k, fitness_kcolors).model)
+#print(h.learn_nnet(1))
