@@ -17,7 +17,7 @@ class HillClimbingOptimizer():
 
         # Optimizer will take 2000 steps and restart, saving the best model from the restarts
         self.optimizer = HillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
-                                     verbose = True, numParameters = 661, maxLearningSteps = 2000)
+                                     verbose = True, numParameters = 661, maxLearningSteps = 2000,  storeAllEvaluations = True)
         self.optimizer.storeAllEvaluations = True
 
         # Save best model and lowest MSE for random restarting
@@ -27,7 +27,7 @@ class HillClimbingOptimizer():
         for i in range(num_restarts):
             temp, best_estimate = self.optimizer.learn()
             self.optimizer = HillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
-                                     verbose = True, numParameters = 661, maxLearningSteps = 2000)
+                                     verbose = True, numParameters = 661, maxLearningSteps = 2000,  storeAllEvaluations = True)
             if best_estimate <= min_MSE:
                 best_model = temp
                 min_MSE = best_estimate
