@@ -13,7 +13,7 @@ class HillClimbingOptimizer():
         self.optimizer = HillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
                                      verbose = True, numParameters = 661, maxLearningSteps = 2000)
 
-    def learn(self, num_restarts):
+    def learn_nnet(self, num_restarts):
         # Save best model and lowest MSE for random restarting
         best_model = self.neural_net
         min_MSE = 2147438647
@@ -29,4 +29,4 @@ class HillClimbingOptimizer():
         self.neural_net = best_model
 
 h = HillClimbingOptimizer()
-h.learn(5)
+h.learn_nnet(5)

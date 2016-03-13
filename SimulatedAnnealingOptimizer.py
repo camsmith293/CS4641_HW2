@@ -8,9 +8,9 @@ class SimulatedAnnealingOptimizer():
         self.dataset = self.learner.ds
         self.training_set, self.testing_set = self.learner.get_datasets()
         self.optimizer = StochasticHillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
-                                     verbose = True, numParameters = 661)
+                                     verbose = True, numParameters = 661, maxLearningSteps = 2000)
 
-    def learn(self, num_restarts):
+    def learn_nnet(self, num_restarts):
          # Save best model and lowest MSE for random restarting
         best_model = self.neural_net
         min_MSE = 2147438647
@@ -26,4 +26,4 @@ class SimulatedAnnealingOptimizer():
         self.neural_net = best_model
 
 s = SimulatedAnnealingOptimizer()
-s.learn()
+s.learn_nnet(5)

@@ -13,7 +13,7 @@ class MIMICOptimizer():
 
         self.optimizer = Mimic([(-100, 100)] * 661, self.NeuralNet_fitness, samples=250)
 
-    def learn(self, iterations):
+    def learn_nnet(self, iterations):
         for i in range(iterations):
             print("Iteration ", i)
             self.optimizer.fit()
@@ -24,4 +24,4 @@ class MIMICOptimizer():
         return self.testing_set.evaluateModuleMSE(evaluatee)
 
 m = MIMICOptimizer(True)
-m.learn(100)
+m.learn_nnet(100)
