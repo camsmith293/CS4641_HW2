@@ -27,9 +27,10 @@ class SimulatedAnnealingOptimizer():
             nnet_sa_evaluations_file = open('out/nnet_sa_evaluations.csv', 'a')
             for item in self.optimizer._allEvaluations:
                 nnet_sa_evaluations_file.write("%s\n" % item)
+            nnet_sa_evaluations_file.write("Restart %d\n" % i)
 
             self.optimizer = StochasticHillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
-                    verbose = True, numParameters = 661, maxLearningSteps = 1000,  storeAllEvaluations = True)
+                    verbose = True, numParameters = 661, maxLearningSteps = 2000,  storeAllEvaluations = True)
             if best_estimate <= min_MSE:
                 best_model = temp
                 min_MSE = best_estimate
