@@ -11,7 +11,7 @@ class MIMICOptimizer():
         self.dataset = self.learner.ds
         self.training_set, self.testing_set = self.learner.get_datasets()
 
-        self.optimizer = Mimic([(-2147483648, 2147483647)] * 661, self.NeuralNet_fitness)
+        self.optimizer = Mimic([(-100, 100)] * 661, self.NeuralNet_fitness, samples=250)
 
     def learn(self, iterations):
         for i in range(iterations):
@@ -25,4 +25,3 @@ class MIMICOptimizer():
 
 m = MIMICOptimizer(True)
 m.learn(100)
-
