@@ -23,7 +23,7 @@ class MIMICOptimizer():
             filtered = self.optimizer.fit()
             evaluations.append(filtered[1])
             print(filtered)
-            if (filtered[0][0] == filtered[0][-1]):
+            if (filtered[0][0] is filtered[0][-1]):
                 for item in evaluations:
                     nnet_mimic_evaluations_file.write("%s\n" % item)
                 evaluations.append("end")
@@ -46,7 +46,7 @@ class MIMICOptimizer():
             filtered = self.optimizer.fit()
             evaluations.append(filtered[1])
             print(filtered)
-            if (filtered[0][0] == filtered[0][-1]):
+            if (filtered[0][0] is filtered[0][-1]):
                 for item in evaluations:
                     opt_mimic_evaluations_file.write("%s\n" % item)
                 evaluations.append("end")
