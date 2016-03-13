@@ -2,7 +2,7 @@ from pybrain.optimization import HillClimber
 from NeuralNetLearner import NeuralNetLearner
 from OptimizationProblems import *
 import matplotlib.pyplot as plt
-from OptimizationProblems.FourPeaks import FourPeaks
+from OptimizationProblems.FourPeaks import FourPeaks, fitness_fourpeaks
 from OptimizationProblems.kColors import kColors
 from OptimizationProblems.Knapsack import Knapsack
 
@@ -34,9 +34,9 @@ class HillClimbingOptimizer():
         self.neural_net = best_model
         return best_model
 
-    def learn_optimizationproblem(self, num_restarts, problem):
+    def learn_optimizationproblem(self, num_restarts, problem, fitness_function):
         # Optimizer will take 250 steps and restart, saving the best model from the restarts
-        self.optimizer = HillClimber(problem.f, problem, verbose = True, maxLearningSteps = 250)
+        self.optimizer = HillClimber(fitness_function, problem, verbose = True, maxLearningSteps = 250)
 
         best_model = problem
         max_fitness = -2147438640
@@ -44,8 +44,8 @@ class HillClimbingOptimizer():
         temp = problem
         for i in range(num_restarts):
             temp = self.optimizer.learn()
-            temp_fitness = temp.f()
-            if temp_fitness >= best_model.f():
+            temp_fitness = fitness_function(temp)
+            if temp_fitness >= max_fitness:
                 best_model = temp
                 max_fitness = temp_fitness
 
@@ -53,4 +53,4 @@ class HillClimbingOptimizer():
 
 h = HillClimbingOptimizer()
 f = FourPeaks('11100100')
-h.learn_optimizationproblem(5, f)
+h.learn_optimizationproblem(5, f, fitness_fourpeaks)

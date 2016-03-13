@@ -1,7 +1,7 @@
 from random import choice, randint
 from pybrain.structure.evolvables.evolvable import Evolvable
 
-def f(problem):
+def fitness_fourpeaks(problem):
         tail = problem.tail('0')
         head = problem.head('1')
         return max(tail, head) + problem.R()
@@ -45,9 +45,6 @@ class FourPeaks(Evolvable):
 
     def domain(self):
         return [0,1] * len(self.model)
-
-f = FourPeaks('11100100')
-print(f.f())
 
 
 
