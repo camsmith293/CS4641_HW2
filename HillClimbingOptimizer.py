@@ -41,8 +41,8 @@ class HillClimbingOptimizer():
         best_model = problem
         max_fitness = -2147438640
 
-        temp = problem
         for i in range(num_restarts):
+            temp = problem
             temp = self.optimizer.learn()
             temp_fitness = fitness_function(temp)
             if temp_fitness >= max_fitness:
