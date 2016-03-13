@@ -40,4 +40,4 @@ class GeneticAlgorithmOptimizer():
 g = GeneticAlgorithmOptimizer()
 k = Knapsack()
 #g.learn_optimizationproblem(k, fitness_knapsack_GA)
-print(g.learn_nnet(5))
+print(g.learn_nnet())
