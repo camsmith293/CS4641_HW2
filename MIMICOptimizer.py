@@ -27,9 +27,8 @@ class MIMICOptimizer():
                 return filtered
 
     def NeuralNet_fitness(self, weights):
-        evaluatee = deepcopy(self.neural_net)
-        evaluatee._setParameters(weights)
-        return self.testing_set.evaluateModuleMSE(evaluatee)
+        self.neural_net._setParameters(weights)
+        return self.testing_set.evaluateModuleMSE(self.neural_net)
 
     def learn_optimizationproblem(self, iterations, problem, fitness_function):
         self.optimizer = Mimic(problem.domain(), fitness_function, samples=250,
