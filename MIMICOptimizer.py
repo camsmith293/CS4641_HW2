@@ -13,7 +13,7 @@ class MIMICOptimizer():
         self.dataset = self.learner.ds
         self.training_set, self.testing_set = self.learner.get_datasets()
 
-        self.optimizer = Mimic([(-100, 100)] * 661, self.NeuralNet_fitness, samples=250, maximize=False)
+        self.optimizer = Mimic([(-1000, 1000)] * 661, self.NeuralNet_fitness, samples=250, maximize=False)
 
         evaluations = []
 
@@ -22,7 +22,7 @@ class MIMICOptimizer():
             filtered = self.optimizer.fit()
             evaluations.append(filtered[1])
             print(filtered)
-            print(len(filtered[0]))
+            print(len(set(filtered[0])))
             if len(filtered[0]) == 1:
                 return filtered
 
