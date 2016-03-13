@@ -13,7 +13,7 @@ class GeneticAlgorithmOptimizer():
         self.neural_net = self.learner.network
         self.dataset = self.learner.ds
         self.training_set, self.testing_set = self.learner.get_datasets()
-        self.optimizer = GA(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
+        self.optimizer = GA(self.testing_set.evaluateModuleMSE, self.neural_net, minimize=True,
                             verbose = True, numParameters = 661,
                             maxLearningSteps=2000, desiredEvaluation = 0.6)
         temp, best_estimate = self.optimizer.learn()
