@@ -15,7 +15,7 @@ class GeneticAlgorithmOptimizer():
         self.training_set, self.testing_set = self.learner.get_datasets()
         self.optimizer = GA(self.testing_set.evaluateModuleMSE, self.neural_net, minimize=True,
                             verbose = True, numParameters = 661,
-                            maxLearningSteps=2000, desiredEvaluation = 0.6,
+                            maxLearningSteps=5000, desiredEvaluation = 0.6,
                             storeAllEvaluations = True)
         temp, best_estimate = self.optimizer.learn()
         nnet_ga_evaluations_file = open('out/nnet_ga_evaluations.csv', 'a')
