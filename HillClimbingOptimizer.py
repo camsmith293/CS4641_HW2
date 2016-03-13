@@ -18,6 +18,7 @@ class HillClimbingOptimizer():
         # Optimizer will take 2000 steps and restart, saving the best model from the restarts
         self.optimizer = HillClimber(self.training_set.evaluateModuleMSE, self.neural_net, minimize=True,
                                      verbose = True, numParameters = 661, maxLearningSteps = 2000)
+        self.optimizer.storeAllEvaluations = True
 
         # Save best model and lowest MSE for random restarting
         best_model = self.neural_net
@@ -32,6 +33,10 @@ class HillClimbingOptimizer():
                 min_MSE = best_estimate
 
         self.neural_net = best_model
+
+        nnet_hc_evaluations_file = open('./nnet_hc_evaluations.txt', 'rw')
+        for item in self.optimizer._allEvaluations:
+            nnet_hc_evaluations_file.write("%s\n" % item)
         return best_model
 
     def learn_optimizationproblem(self, num_restarts, problem, fitness_function):
