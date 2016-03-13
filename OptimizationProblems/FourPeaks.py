@@ -2,8 +2,7 @@ from random import choice, randint
 from pybrain.structure.evolvables.evolvable import Evolvable
 
 class FourPeaks(Evolvable):
-    def __init__(self, bitstring):
-        self.model = bitstring
+    def __init__(self):
         self.length = len(self.model)
         self.t = int(self.length/10)
         self.randomize()

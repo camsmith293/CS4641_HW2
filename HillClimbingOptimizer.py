@@ -1,6 +1,11 @@
 from pybrain.optimization import HillClimber
 from NeuralNetLearner import NeuralNetLearner
+from OptimizationProblems import *
 import matplotlib.pyplot as plt
+from OptimizationProblems.FourPeaks import FourPeaks
+from OptimizationProblems.kColors import kColors
+from OptimizationProblems.Knapsack import Knapsack
+
 
 class HillClimbingOptimizer():
 
@@ -47,4 +52,5 @@ class HillClimbingOptimizer():
         return best_model
 
 h = HillClimbingOptimizer()
-h.learn_nnet(5)
+f = FourPeaks()
+h.learn_optimizationproblem(5, f)
