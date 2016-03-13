@@ -100,7 +100,12 @@ class Distribution(object):
         #
         # return samples
 
-        return random.sample(self.samples.tolist(), number_to_generate)
+        #return random.sample(self.samples.tolist(), number_to_generate)
+
+        samples = list()
+        for i in range(number_to_generate):
+            samples.append(random.choice(self.samples.tolist()))
+        return samples
 
 
     def _generate_bayes_net(self):
