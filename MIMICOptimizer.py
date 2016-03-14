@@ -29,6 +29,10 @@ class MIMICOptimizer():
                 evaluations.append("end")
                 return filtered[0][0], filtered[1]
 
+            for item in evaluations:
+                nnet_mimic_evaluations_file.write("%s\n" % item)
+            evaluations.append("end")
+
     def NeuralNet_fitness(self, weights):
         self.neural_net._setParameters(weights)
         return self.testing_set.evaluateModuleMSE(self.neural_net)
@@ -51,3 +55,7 @@ class MIMICOptimizer():
                     opt_mimic_evaluations_file.write("%s\n" % item)
                 evaluations.append("end")
                 return filtered[0][0], filtered[1]
+
+        for item in evaluations:
+            opt_mimic_evaluations_file.write("%s\n" % item)
+        evaluations.append("end")

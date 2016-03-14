@@ -9,7 +9,7 @@ s = SimulatedAnnealingOptimizer()
 g = GeneticAlgorithmOptimizer()
 m = MIMICOptimizer()
 
-f = FourPeaks('11110000')
+f = FourPeaks('00001111')
 
 h.learn_optimizationproblem(2, f, fitness_fourpeaks)
 s.learn_optimizationproblem(2, f, fitness_fourpeaks)
