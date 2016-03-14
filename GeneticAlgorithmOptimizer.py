@@ -33,7 +33,7 @@ class GeneticAlgorithmOptimizer():
         self.optimizer.learn()
         out_name = 'out/opt_ga_evaluations_' + problem.__class__.__name__ + '.csv'
         opt_ga_evaluations_file = open(out_name, 'a')
+        temp, best_estimate = self.optimizer.learn()
         for item in self.optimizer._allEvaluations:
             opt_ga_evaluations_file.write("%s\n" % item)
-        temp, best_estimate = self.optimizer.learn()
         return temp
