@@ -3,12 +3,12 @@ from pybrain.structure.evolvables.evolvable import Evolvable
 
 def fitness_fourpeaks(evaluable):
         stringed = ""
-        for i in evaluable:
-            stringed += str(evaluable[i])
-        temp = FourPeaks(stringed)
-        tail = temp.tail('0')
-        head = temp.head('1')
-        return max(tail, head) + temp.R()
+        for i in evaluable.model:
+            stringed += str(evaluable.model[i])
+        evaluable.stringed = stringed
+        tail = evaluable.tail('0')
+        head = evaluable.head('1')
+        return max(tail, head) + evaluable.R()
 
 def fitness_fourpeaks_GA(evaluable):
         stringed = ""
@@ -49,6 +49,7 @@ class FourPeaks(Evolvable):
     def randomize(self):
         for i in range(len(self.model)):
             self.model[i] = choice([0,1])
+        return self.model
 
     def domain(self):
         return [0,1] * len(self.model)

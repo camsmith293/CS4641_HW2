@@ -40,10 +40,10 @@ class HillClimbingOptimizer():
 
         return best_model
 
-    def learn_optimizationproblem(self, num_restarts, problem, fitness_function):
+    def learn_optimizationproblem(self, num_restarts, problem, fitness_function, minimize=False):
         # Optimizer will take 250 steps and restart, saving the best model from the restarts
         self.optimizer = HillClimber(fitness_function, problem, verbose = True,
-                maxLearningSteps = 250, minimize=True, storeAllEvaluations = True)
+                maxLearningSteps = 250, minimize=minimize, storeAllEvaluations = True)
         best_model = problem
         max_fitness = -2147438640
 
@@ -64,8 +64,3 @@ class HillClimbingOptimizer():
                 max_fitness = best_estimate
 
         return best_model
-
-h = HillClimbingOptimizer()
-k = kColors()
-#print(h.learn_optimizationproblem(5, k, fitness_kcolors).model)
-print(h.learn_nnet(5))

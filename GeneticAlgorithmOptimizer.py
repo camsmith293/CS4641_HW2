@@ -23,12 +23,12 @@ class GeneticAlgorithmOptimizer():
             nnet_ga_evaluations_file.write("%s\n" % item)
         return temp
 
-    def learn_optimizationproblem(self, problem, fitness_function):
+    def learn_optimizationproblem(self, problem, fitness_function, minimize=False):
         initial_population = [problem.model]
         for i in range(24):
             initial_population.append(deepcopy(problem).randomize())
         self.optimizer = GA(fitness_function, problem.model,
-                            verbose = True,maxLearningSteps=2000, desiredEvaluation = 0.6,
+                            verbose = True,maxLearningSteps=2000, desiredEvaluation = 0.6, minimize=minimize,
                             initialPopulation = initial_population, initRangeScaling=1,storeAllEvaluations = True)
         out_name = 'out/opt_ga_evaluations_' + problem.__class__.__name__ + '.csv'
         opt_ga_evaluations_file = open(out_name, 'a')
@@ -36,8 +36,3 @@ class GeneticAlgorithmOptimizer():
             opt_ga_evaluations_file.write("%s\n" % item)
         temp, best_estimate = self.optimizer.learn()
         return temp
-
-g = GeneticAlgorithmOptimizer()
-k = Knapsack()
-#g.learn_optimizationproblem(k, fitness_knapsack_GA)
-print(g.learn_nnet())

@@ -62,10 +62,10 @@ class SimulatedAnnealingOptimizer():
 
         return temp, min_MSE
 
-    def learn_optimizationproblem(self, num_restarts, problem, fitness_function):
+    def learn_optimizationproblem(self, num_restarts, problem, fitness_function, minimize = False):
         # Optimizer will take 250 steps and restart, saving the best model from the restarts
         self.optimizer = StochasticHillClimber(fitness_function, problem, verbose = True,
-                maxLearningSteps = 250, minimize=True, storeAllEvaluations = True)
+                maxLearningSteps = 250, minimize=minimize, storeAllEvaluations = True)
         best_model = problem
         max_fitness = -2147438640
 
@@ -86,8 +86,3 @@ class SimulatedAnnealingOptimizer():
                 max_fitness = best_estimate
 
         return best_model, max_fitness
-
-s = SimulatedAnnealingOptimizer()
-k = Knapsack()
-#ret = s.learn_optimizationproblem(5, k, fitness_knapsack)
-print(s.learn_nnet_norestarts())

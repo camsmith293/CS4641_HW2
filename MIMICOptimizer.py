@@ -51,8 +51,3 @@ class MIMICOptimizer():
                     opt_mimic_evaluations_file.write("%s\n" % item)
                 evaluations.append("end")
                 return filtered[0][0], filtered[1]
-
-m = MIMICOptimizer()
-# f = FourPeaks('11110000')
-# m.learn_optimizationproblem(1000, f, fitness_fourpeaks)
-m.learn_nnet(10)
