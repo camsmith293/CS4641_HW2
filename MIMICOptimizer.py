@@ -33,9 +33,9 @@ class MIMICOptimizer():
         self.neural_net._setParameters(weights)
         return self.testing_set.evaluateModuleMSE(self.neural_net)
 
-    def learn_optimizationproblem(self, iterations, problem, fitness_function):
+    def learn_optimizationproblem(self, iterations, problem, fitness_function, minimize=False):
         self.optimizer = Mimic(problem.domain(), fitness_function, samples=250,
-                maximize=True, discreteValues=True, percentile=0.5)
+                maximize=True, discreteValues=True, percentile=0.9, minimize=minimize)
 
         evaluations = []
         out_name = 'out/opt_mimic_evaluations_' + problem.__class__.__name__ + '.csv'
