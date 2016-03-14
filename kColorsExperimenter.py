@@ -10,8 +10,9 @@ g = GeneticAlgorithmOptimizer()
 m = MIMICOptimizer()
 
 f = kColors()
+f_assigned = {'Black', 'Black', 'Black', 'Black',}
 
-h.learn_optimizationproblem(2, f, fitness_kcolors)
-s.learn_optimizationproblem(2, f, fitness_kcolors)
-g.learn_optimizationproblem(f, fitness_kcolors_GA)
-m.learn_optimizationproblem(500, f, fitness_kcolors_GA)
+h.learn_optimizationproblem(2, f, fitness_kcolors, minimize=True)
+s.learn_optimizationproblem(2, f, fitness_kcolors, minimize=True)
+g.learn_optimizationproblem(f_assigned, fitness_kcolors_GA, minimize=True)
+m.learn_optimizationproblem(500, f, fitness_kcolors_GA, minimize=True)
