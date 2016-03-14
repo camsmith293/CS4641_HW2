@@ -13,7 +13,7 @@ class MIMICOptimizer():
         self.dataset = self.learner.ds
         self.training_set, self.testing_set = self.learner.get_datasets()
 
-        self.optimizer = Mimic([(-10, 10)] * 661, self.NeuralNet_fitness, samples=500, maximize=False)
+        self.optimizer = Mimic([(-5, 5)] * 661, self.NeuralNet_fitness, samples=500, maximize=False)
 
         evaluations = []
         nnet_mimic_evaluations_file = open('out/nnet_mimic_evaluations.csv', 'a')
