@@ -3,7 +3,7 @@ from pybrain.structure.evolvables.evolvable import Evolvable
 
 def fitness_fourpeaks(evaluable):
         stringed = ""
-        for i in evaluable.model:
+        for i in range(len(evaluable.model)):
             stringed += str(evaluable.model[i])
         evaluable.stringed = stringed
         tail = evaluable.tail('0')
@@ -12,7 +12,7 @@ def fitness_fourpeaks(evaluable):
 
 def fitness_fourpeaks_GA(evaluable):
         stringed = ""
-        for i in evaluable:
+        for i in range(len(evaluable)):
             stringed += str(evaluable[i])
         temp = FourPeaks(stringed)
         return fitness_fourpeaks(temp)
